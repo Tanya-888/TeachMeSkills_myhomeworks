@@ -1,0 +1,344 @@
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># мои домашние задания в TMS\r\n\r\n# задание 1 урок 11\r\n\r\nclass Soda:\r\n    def __init__(self, flavor=None):\r\n        self.flavor = flavor\r\n\r\n    def __str__(self):\r\n        if self.flavor:\r\n            return f\"У вас газировка с {self.flavor} вкусом\"\r\n        else:\r\n            return \"У вас обычная газировка\"\r\n\r\n# Пример\r\nsoda1 = Soda(\"клубничным\")\r\nprint(soda1)  # У вас газировка с клубничным вкусом\r\n\r\nsoda2 = Soda()\r\nprint(soda2)  # У вас обычная газировка\r\n\r\n\r\n\r\n# задание 2\r\n\r\nclass Math:\r\n    def addition(self, a, b):\r\n        result = a + b\r\n        print(f\"{a} + {b} = {result}\")\r\n\r\n    def subtraction(self, a, b):\r\n        result = a - b\r\n        print(f\"{a} - {b} = {result}\")\r\n\r\n    def multiplication(self, a, b):\r\n        result = a * b\r\n        print(f\"{a} * {b} = {result}\")\r\n\r\n    def division(self, a, b):\r\n        if b != 0:\r\n            result = a / b\r\n            print(f\"{a} / {b} = {result}\")\r\n        else:\r\n            print(\"Деление на ноль невозможно\")\r\n\r\n\r\n\r\n# задание 3\r\n\r\nclass Car:\r\n    def __init__(self, color, type, year):\r\n        self.color = color\r\n        self.type = type\r\n        self.year = year\r\n\r\n    def start(self):\r\n        print(\"Автомобиль заведён\")\r\n\r\n    def stop(self):\r\n        print(\"Автомобиль заглушен\")\r\n\r\n    def set_year(self, year):\r\n        self.year = year\r\n\r\n    def set_type(self, type):\r\n        self.type = type\r\n\r\n    def set_color(self, color):\r\n        self.color = color\r\n\r\n\r\ncar = Car(\"Красный\", \"универсал\", 2024)\r\ncar.start()  # Вывод: Автомобиль заведён\r\ncar.set_color(\"Черный\")\r\ncar.set_type(\"седан\")\r\ncar.set_year(2021)\r\nprint(f\"Цвет: {car.color}, Тип: {car.type}, Год: {car.year}\")\r\ncar.stop()   # Вывод: Автомобиль заглушен\r\n\r\n\r\n\r\n# задание 4\r\n\r\nimport math\r\n\r\nclass Sphere:\r\n    def __init__(self, radius=1.0, x=0.0, y=0.0, z=0.0):\r\n        self.radius = radius\r\n        self.center = (x, y, z)\r\n\r\n    def get_volume(self):    # возвращает объем сферы V = 4/3 * π * r^3\r\n\r\n        return (4 / 3) * math.pi * self.radius ** 3\r\n\r\n    def get_square(self):        # возвращает площадь внешней поверхности сферы  S = 4 * π * r^2\r\n\r\n        return 4 * math.pi * self.radius ** 2\r\n\r\n    def get_radius(self):    # возвращает текущий радиус сферы\r\n\r\n        return self.radius\r\n\r\n    def get_center(self):     # возвращает кортеж с координатами центра сферы\r\n\r\n        return self.center\r\n\r\n    def set_radius(self, radius):           # новый радиус сферы\r\n\r\n        self.radius = radius\r\n\r\n    def set_center(self, x, y, z):              #  новые координаты центра сферы\r\n\r\n        self.center = (x, y, z)\r\n\r\n    def is_point_inside(self, x, y, z):\r\n\r\n        # Проверяет, находится ли точка внутри сферы\r\n        # точка внутри или на границе: расстояние до центра <= радиуса\r\n\r\n        dx = x - self.center[0]\r\n        dy = y - self.center[1]\r\n        dz = z - self.center[2]\r\n\r\n        distance_squared = dx ** 2 + dy ** 2 + dz ** 2\r\n        return distance_squared <= self.radius ** 2\r\n\r\n\r\n\r\n# задание 5\r\n\r\nclass SuperStr(str):\r\n    def is_repeatance(self, s):\r\n        # Если строка s пустая, возвращаем False\r\n        if not s:\r\n            return False\r\n        # Проверяем, что текущая строка может быть получена повторением s\r\n        # проверяем, что длина текущей строки делится на длину s\r\n        if len(self) % len(s) != 0:\r\n            return False\r\n        # Строим строку из повторений s и сравниваем с текущей\r\n        if self == s * (len(self) // len(s)):\r\n            return True\r\n        return False\r\n\r\n    def is_palindrom(self):\r\n        # Палиндром вне зависимости от регистра\r\n        lower_str = self.lower()\r\n        return lower_str == lower_str[::-1]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision df3f4723992961ac8af7a6eb8eb6af95221cbde0)
++++ b/README.md	(date 1756914020443)
+@@ -1,148 +1,222 @@
+ # мои домашние задания в TMS
+ 
+-# задание 1 урок 11
++# задание 1 урок 12
++
++
++class Tovar:
++    def __init__(self, name, shop, price):
++        self.__name = name
++        self.__shop = shop
++        self.__price = price
++
++    # доступ к закрытым полям
++    @property
++    def name(self):
++        return self.__name
+ 
+-class Soda:
+-    def __init__(self, flavor=None):
+-        self.flavor = flavor
++    @property
++    def shop(self):
++        return self.__shop
++
++    @property
++    def price(self):
++        return self.__price
+ 
+     def __str__(self):
+-        if self.flavor:
+-            return f"У вас газировка с {self.flavor} вкусом"
++        return f"Товар: {self.__name}, Магазин: {self.__shop}, Цена: {self.__price} руб."
++
++    # Перегрузка сложения по цене
++    def __add__(self, other):
++        if isinstance(other, Tovar):
++            return self.__price + other.__price
++        return NotImplemented
++
++
++class Sklad:
++    def __init__(self):
++        self.__tovary = []
++
++    def add_tovar(self, tovar):
++        self.__tovary.append(tovar)
++
++    def get_tovar_by_index(self, index):
++        if 0 <= index < len(self.__tovary):
++            return str(self.__tovary[index])
+         else:
+-            return "У вас обычная газировка"
++            return "Индекс вне диапазона"
++
++    def get_tovar_by_name(self, name):
++        for tovar in self.__tovary:
++            if tovar.name == name:
++                return str(tovar)
++        return "Товар не найден"
++
++    def sort_by_name(self):
++        self.__tovary.sort(key=lambda t: t.name)
++
++    def sort_by_shop(self):
++        self.__tovary.sort(key=lambda t: t.shop)
++
++    def sort_by_price(self):
++        self.__tovary.sort(key=lambda t: t.price)
+ 
+ # Пример
+-soda1 = Soda("клубничным")
+-print(soda1)  # У вас газировка с клубничным вкусом
++
++# Создаем склад и добавляем товары
++sklad = Sklad()
++sklad.add_tovar(Tovar("Хлеб", "Магазин1", 10))
++sklad.add_tovar(Tovar("Молоко", "Магазин2", 60))
++sklad.add_tovar(Tovar("Творог", "Магазин1", 200))
++
++# Вывод по индексу
++print(sklad.get_tovar_by_index(1))  # Молоко
++
++# Вывод по имени товара
++print(sklad.get_tovar_by_name("Творог"))  # Творог
+ 
+-soda2 = Soda()
+-print(soda2)  # У вас обычная газировка
++# Сортировка по названию и вывод
++sklad.sort_by_name()
++for i in range(3):
++    print(sklad.get_tovar_by_index(i))
++
++# Сортировка по магазину и вывод
++sklad.sort_by_shop()
++for i in range(3):
++    print(sklad.get_tovar_by_index(i))
++
++# Сортировка по цене и вывод
++sklad.sort_by_price()
++for i in range(3):
++    print(sklad.get_tovar_by_index(i))
++
++# Перегрузка сложения товаров по цене
++print("Общая цена двух товаров:", sklad._Sklad__tovary[0] + sklad._Sklad__tovary[1])  # сумма цен первых двух товаров
++
+ 
+ 
+ 
+ # задание 2
+ 
+-class Math:
+-    def addition(self, a, b):
+-        result = a + b
+-        print(f"{a} + {b} = {result}")
++class ПчёлоСлон:
++    def __init__(self, пчела, слон):
++        self.пчела = пчела
++        self.слон = слон
+ 
+-    def subtraction(self, a, b):
+-        result = a - b
+-        print(f"{a} - {b} = {result}")
++    def Fly(self):
++        return self.пчела >= self.слон
+ 
+-    def multiplication(self, a, b):
+-        result = a * b
+-        print(f"{a} * {b} = {result}")
+-
+-    def division(self, a, b):
+-        if b != 0:
+-            result = a / b
+-            print(f"{a} / {b} = {result}")
++    def Trumpet(self):
++        if self.слон >= self.пчела:
++            return "tu-tu-doo-doo"
+         else:
+-            print("Деление на ноль невозможно")
++            return "wzzzz"
+ 
++    def Eat(self, meal, value):
++        if meal not in ["nectar", "grass"]:
++            return  # Неверный тип еды, ничего не делаем
++
++        if meal == "nectar":
++            # Уменьшаем часть слона, увеличиваем пчелу
++            new_слон = max(self.слон - value, 0)
++            delta = self.слон - new_слон
++            self.слон = new_слон
++            self.пчела = min(self.пчела + delta, 100)
++        else:  # grass
++            # Увеличиваем часть слона, уменьшаем пчелу
++            new_пчела = max(self.пчела - value, 0)
++            delta = new_пчела - self.пчела
++            self.пчела = new_пчела
++            self.слон = min(self.слон + delta, 100)
+ 
+ 
+ # задание 3
+ 
+-class Car:
+-    def __init__(self, color, type, year):
+-        self.color = color
+-        self.type = type
+-        self.year = year
+-
+-    def start(self):
+-        print("Автомобиль заведён")
++class Bus:
++    def __init__(self, max_seats, max_speed):
++        self.speed = 0
++        self.max_seats = max_seats
++        self.max_speed = max_speed
++        self.passengers = []  # список фамилий пассажиров
++        self.has_free_seats = True
++        # словарь мест: ключ - место (номер), значение - фамилия или None
++        self.seats = {i: None for i in range(1, max_seats + 1)}
+ 
+-    def stop(self):
+-        print("Автомобиль заглушен")
++    def update_free_seats(self):
++        # Обновляем флаг наличия свободных мест
++        self.has_free_seats = any(v is None for v in self.seats.values())
+ 
+-    def set_year(self, year):
+-        self.year = year
++    def board_passenger(self, surname):
++        # Посадка пассажира по фамилии
++        for seat_number, occupant in self.seats.items():
++            if occupant is None:
++                self.seats[seat_number] = surname
++                self.passengers.append(surname)
++                self.update_free_seats()
++                print(f"{surname} посажен на место {seat_number}")
++                return
++        print("Нет свободных мест!")
+ 
+-    def set_type(self, type):
+-        self.type = type
++    def disembark_passenger(self, surname):
++        # Высадка пассажира по фамилии
++        for seat_number, occupant in self.seats.items():
++            if occupant == surname:
++                self.seats[seat_number] = None
++                if surname in self.passengers:
++                    self.passengers.remove(surname)
++                self.update_free_seats()
++                print(f"{surname} высажен с места {seat_number}")
++                return
++        print(f"Пассажир {surname} не найден в автобусе.")
+ 
+-    def set_color(self, color):
+-        self.color = color
++    def increase_speed(self, delta):
++        new_speed = min(self.speed + delta, self.max_speed)
++        print(f"Увеличение скорости с {self.speed} до {new_speed}")
++        self.speed = new_speed
+ 
++    def decrease_speed(self, delta):
++        new_speed = max(self.speed - delta, 0)
++        print(f"Уменьшение скорости с {self.speed} до {new_speed}")
++        self.speed = new_speed
+ 
+-car = Car("Красный", "универсал", 2024)
+-car.start()  # Вывод: Автомобиль заведён
+-car.set_color("Черный")
+-car.set_type("седан")
+-car.set_year(2021)
+-print(f"Цвет: {car.color}, Тип: {car.type}, Год: {car.year}")
+-car.stop()   # Вывод: Автомобиль заглушен
++    def __contains__(self, item):
++        # Проверка наличия пассажира по фамилии
++        return item in self.passengers
+ 
++    def __iadd__(self, other):
++        # Посадка пассажира (добавление через +=)
++        if isinstance(other, str):
++            self.board_passenger(other)
++            return self
++        else:
++            raise ValueError("Можно посадить только по фамилии")
+ 
++    def __isub__(self, other):
++        # Высадка пассажира (удаление через -=)
++        if isinstance(other, str):
++            self.disembark_passenger(other)
++            return self
++        else:
++            raise ValueError("Можно высадить только по фамилии")
+ 
+-# задание 4
++# Пример использования:
++bus = Bus(max_seats=15, max_speed=100)
+ 
+-import math
++# Посадка пассажиров
++bus += "Иванов"
++bus += "Сидоров"
+ 
+-class Sphere:
+-    def __init__(self, radius=1.0, x=0.0, y=0.0, z=0.0):
+-        self.radius = radius
+-        self.center = (x, y, z)
++# Проверка наличия пассажира
++print("Иванов" in bus)  # True
+ 
+-    def get_volume(self):    # возвращает объем сферы V = 4/3 * π * r^3
++# Увеличение скорости
++bus.increase_speed(50)
+ 
+-        return (4 / 3) * math.pi * self.radius ** 3
++# Уменьшение скорости
++bus.decrease_speed(20)
+ 
+-    def get_square(self):        # возвращает площадь внешней поверхности сферы  S = 4 * π * r^2
++# Высадка пассажира
++bus -= "Иванов"
+ 
+-        return 4 * math.pi * self.radius ** 2
++# Проверка наличия после высадки
++print("Иванов" in bus)  # False
+ 
+-    def get_radius(self):    # возвращает текущий радиус сферы
+-
+-        return self.radius
+-
+-    def get_center(self):     # возвращает кортеж с координатами центра сферы
+-
+-        return self.center
+-
+-    def set_radius(self, radius):           # новый радиус сферы
+-
+-        self.radius = radius
+-
+-    def set_center(self, x, y, z):              #  новые координаты центра сферы
+-
+-        self.center = (x, y, z)
+-
+-    def is_point_inside(self, x, y, z):
+-
+-        # Проверяет, находится ли точка внутри сферы
+-        # точка внутри или на границе: расстояние до центра <= радиуса
+-
+-        dx = x - self.center[0]
+-        dy = y - self.center[1]
+-        dz = z - self.center[2]
+-
+-        distance_squared = dx ** 2 + dy ** 2 + dz ** 2
+-        return distance_squared <= self.radius ** 2
+-
+-
+-
+-# задание 5
+-
+-class SuperStr(str):
+-    def is_repeatance(self, s):
+-        # Если строка s пустая, возвращаем False
+-        if not s:
+-            return False
+-        # Проверяем, что текущая строка может быть получена повторением s
+-        # проверяем, что длина текущей строки делится на длину s
+-        if len(self) % len(s) != 0:
+-            return False
+-        # Строим строку из повторений s и сравниваем с текущей
+-        if self == s * (len(self) // len(s)):
+-            return True
+-        return False
+-
+-    def is_palindrom(self):
+-        # Палиндром вне зависимости от регистра
+-        lower_str = self.lower()
+-        return lower_str == lower_str[::-1]
+\ No newline at end of file
