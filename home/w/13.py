@@ -202,6 +202,7 @@ class Calculator:
     def calculate(self, a, b):
         return self.strategy.execute(a, b)
 
+
 # Пример
 if __name__ == "__main__":
     calc = Calculator(Addition())
