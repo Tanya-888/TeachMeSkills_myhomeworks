@@ -1,0 +1,15 @@
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># мои домашиние задания в TMS
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 9c797ad4aea1a020edd9d2b19b94c03bd38d8e9d)
++++ b/README.md	(date 1757184293319)
+@@ -1,1 +1,1 @@
+-# мои домашиние задания в TMS
+\ No newline at end of file
++ # мои домашние задания TMS
+\ No newline at end of file
