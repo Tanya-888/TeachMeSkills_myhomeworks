@@ -14,7 +14,6 @@ for fib_num in fibonacci(num):
 
 
 
-
 # задание 2
 
 def cyclic_sequence():
