@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48d24edb-f081-4297-bec3-cfeed7abb538" name="Changes" comment="home/w 11" />
+    <list default="true" id="48d24edb-f081-4297-bec3-cfeed7abb538" name="Changes" comment="home w 12" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +33,7 @@
     </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="lesson12" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,7 +64,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "lesson12",
+    "git-widget-placeholder": "development",
     "ignore.virus.scanning.warn.message": "true",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   },
@@ -210,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757179501653</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="home w 12">
+      <option name="closed" value="true" />
+      <created>1757227907699</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1757227907699</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -233,6 +241,7 @@
     <MESSAGE value="home w" />
     <MESSAGE value="home/w" />
     <MESSAGE value="home/w 11" />
-    <option name="LAST_COMMIT_MESSAGE" value="home/w 11" />
+    <MESSAGE value="home w 12" />
+    <option name="LAST_COMMIT_MESSAGE" value="home w 12" />
   </component>
 </project>
