@@ -1,0 +1,451 @@
+Index: 12.py
+===================================================================
+diff --git a/12.py b/12.py
+deleted file mode 100644
+--- a/12.py	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
++++ /dev/null	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
+@@ -1,222 +0,0 @@
+-# задание 1 урок 12
+-
+-
+-class Tovar:
+-    def __init__(self, name, shop, price):
+-        self.__name = name
+-        self.__shop = shop
+-        self.__price = price
+-
+-    # доступ к закрытым полям
+-    @property
+-    def name(self):
+-        return self.__name
+-
+-    @property
+-    def shop(self):
+-        return self.__shop
+-
+-    @property
+-    def price(self):
+-        return self.__price
+-
+-    def __str__(self):
+-        return f"Товар: {self.__name}, Магазин: {self.__shop}, Цена: {self.__price} руб."
+-
+-    # Перегрузка сложения по цене
+-    def __add__(self, other):
+-        if isinstance(other, Tovar):
+-            return self.__price + other.__price
+-        return NotImplemented
+-
+-
+-class Sklad:
+-    def __init__(self):
+-        self.__tovary = []
+-
+-    def add_tovar(self, tovar):
+-        self.__tovary.append(tovar)
+-
+-    def get_tovar_by_index(self, index):
+-        if 0 <= index < len(self.__tovary):
+-            return str(self.__tovary[index])
+-        else:
+-            return "Индекс вне диапазона"
+-
+-    def get_tovar_by_name(self, name):
+-        for tovar in self.__tovary:
+-            if tovar.name == name:
+-                return str(tovar)
+-        return "Товар не найден"
+-
+-    def sort_by_name(self):
+-        self.__tovary.sort(key=lambda t: t.name)
+-
+-    def sort_by_shop(self):
+-        self.__tovary.sort(key=lambda t: t.shop)
+-
+-    def sort_by_price(self):
+-        self.__tovary.sort(key=lambda t: t.price)
+-
+-# Пример
+-
+-# Создаем склад и добавляем товары
+-sklad = Sklad()
+-sklad.add_tovar(Tovar("Хлеб", "Магазин1", 10))
+-sklad.add_tovar(Tovar("Молоко", "Магазин2", 60))
+-sklad.add_tovar(Tovar("Творог", "Магазин1", 200))
+-
+-# Вывод по индексу
+-print(sklad.get_tovar_by_index(1))  # Молоко
+-
+-# Вывод по имени товара
+-print(sklad.get_tovar_by_name("Творог"))  # Творог
+-
+-# Сортировка по названию и вывод
+-sklad.sort_by_name()
+-for i in range(3):
+-    print(sklad.get_tovar_by_index(i))
+-
+-# Сортировка по магазину и вывод
+-sklad.sort_by_shop()
+-for i in range(3):
+-    print(sklad.get_tovar_by_index(i))
+-
+-# Сортировка по цене и вывод
+-sklad.sort_by_price()
+-for i in range(3):
+-    print(sklad.get_tovar_by_index(i))
+-
+-# Перегрузка сложения товаров по цене
+-print("Общая цена двух товаров:", sklad._Sklad__tovary[0] + sklad._Sklad__tovary[1])  # сумма цен первых двух товаров
+-
+-
+-
+-
+-# задание 2
+-
+-class ПчёлоСлон:
+-    def __init__(self, пчела, слон):
+-        self.пчела = пчела
+-        self.слон = слон
+-
+-    def Fly(self):
+-        return self.пчела >= self.слон
+-
+-    def Trumpet(self):
+-        if self.слон >= self.пчела:
+-            return "tu-tu-doo-doo"
+-        else:
+-            return "wzzzz"
+-
+-    def Eat(self, meal, value):
+-        if meal not in ["nectar", "grass"]:
+-            return  # Неверный тип еды, ничего не делаем
+-
+-        if meal == "nectar":
+-            # Уменьшаем часть слона, увеличиваем пчелу
+-            new_слон = max(self.слон - value, 0)
+-            delta = self.слон - new_слон
+-            self.слон = new_слон
+-            self.пчела = min(self.пчела + delta, 100)
+-        else:  # grass
+-            # Увеличиваем часть слона, уменьшаем пчелу
+-            new_пчела = max(self.пчела - value, 0)
+-            delta = new_пчела - self.пчела
+-            self.пчела = new_пчела
+-            self.слон = min(self.слон + delta, 100)
+-
+-
+-# задание 3
+-
+-class Bus:
+-    def __init__(self, max_seats, max_speed):
+-        self.speed = 0
+-        self.max_seats = max_seats
+-        self.max_speed = max_speed
+-        self.passengers = []  # список фамилий пассажиров
+-        self.has_free_seats = True
+-        # словарь мест: ключ - место (номер), значение - фамилия или None
+-        self.seats = {i: None for i in range(1, max_seats + 1)}
+-
+-    def update_free_seats(self):
+-        # Обновляем флаг наличия свободных мест
+-        self.has_free_seats = any(v is None for v in self.seats.values())
+-
+-    def board_passenger(self, surname):
+-        # Посадка пассажира по фамилии
+-        for seat_number, occupant in self.seats.items():
+-            if occupant is None:
+-                self.seats[seat_number] = surname
+-                self.passengers.append(surname)
+-                self.update_free_seats()
+-                print(f"{surname} посажен на место {seat_number}")
+-                return
+-        print("Нет свободных мест!")
+-
+-    def disembark_passenger(self, surname):
+-        # Высадка пассажира по фамилии
+-        for seat_number, occupant in self.seats.items():
+-            if occupant == surname:
+-                self.seats[seat_number] = None
+-                if surname in self.passengers:
+-                    self.passengers.remove(surname)
+-                self.update_free_seats()
+-                print(f"{surname} высажен с места {seat_number}")
+-                return
+-        print(f"Пассажир {surname} не найден в автобусе.")
+-
+-    def increase_speed(self, delta):
+-        new_speed = min(self.speed + delta, self.max_speed)
+-        print(f"Увеличение скорости с {self.speed} до {new_speed}")
+-        self.speed = new_speed
+-
+-    def decrease_speed(self, delta):
+-        new_speed = max(self.speed - delta, 0)
+-        print(f"Уменьшение скорости с {self.speed} до {new_speed}")
+-        self.speed = new_speed
+-
+-    def __contains__(self, item):
+-        # Проверка наличия пассажира по фамилии
+-        return item in self.passengers
+-
+-    def __iadd__(self, other):
+-        # Посадка пассажира (добавление через +=)
+-        if isinstance(other, str):
+-            self.board_passenger(other)
+-            return self
+-        else:
+-            raise ValueError("Можно посадить только по фамилии")
+-
+-    def __isub__(self, other):
+-        # Высадка пассажира (удаление через -=)
+-        if isinstance(other, str):
+-            self.disembark_passenger(other)
+-            return self
+-        else:
+-            raise ValueError("Можно высадить только по фамилии")
+-
+-# Пример использования:
+-bus = Bus(max_seats=15, max_speed=100)
+-
+-# Посадка пассажиров
+-bus += "Иванов"
+-bus += "Сидоров"
+-
+-# Проверка наличия пассажира
+-print("Иванов" in bus)  # True
+-
+-# Увеличение скорости
+-bus.increase_speed(50)
+-
+-# Уменьшение скорости
+-bus.decrease_speed(20)
+-
+-# Высадка пассажира
+-bus -= "Иванов"
+-
+-# Проверка наличия после высадки
+-print("Иванов" in bus)  # False
+-
+-
+-
+Index: README.md
+===================================================================
+diff --git a/README.md b/README.md
+deleted file mode 100644
+--- a/README.md	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
++++ /dev/null	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
+@@ -1,1 +0,0 @@
+-# мои домашние задания в TMS
+Index: 11.py
+===================================================================
+diff --git a/11.py b/11.py
+deleted file mode 100644
+--- a/11.py	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
++++ /dev/null	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
+@@ -1,146 +0,0 @@
+-# задание 1 урок 11
+-
+-class Soda:
+-    def __init__(self, flavor=None):
+-        self.flavor = flavor
+-
+-    def __str__(self):
+-        if self.flavor:
+-            return f"У вас газировка с {self.flavor} вкусом"
+-        else:
+-            return "У вас обычная газировка"
+-
+-# Пример
+-soda1 = Soda("клубничным")
+-print(soda1)  # У вас газировка с клубничным вкусом
+-
+-soda2 = Soda()
+-print(soda2)  # У вас обычная газировка
+-
+-
+-
+-# задание 2
+-
+-class Math:
+-    def addition(self, a, b):
+-        result = a + b
+-        print(f"{a} + {b} = {result}")
+-
+-    def subtraction(self, a, b):
+-        result = a - b
+-        print(f"{a} - {b} = {result}")
+-
+-    def multiplication(self, a, b):
+-        result = a * b
+-        print(f"{a} * {b} = {result}")
+-
+-    def division(self, a, b):
+-        if b != 0:
+-            result = a / b
+-            print(f"{a} / {b} = {result}")
+-        else:
+-            print("Деление на ноль невозможно")
+-
+-
+-
+-# задание 3
+-
+-class Car:
+-    def __init__(self, color, type, year):
+-        self.color = color
+-        self.type = type
+-        self.year = year
+-
+-    def start(self):
+-        print("Автомобиль заведён")
+-
+-    def stop(self):
+-        print("Автомобиль заглушен")
+-
+-    def set_year(self, year):
+-        self.year = year
+-
+-    def set_type(self, type):
+-        self.type = type
+-
+-    def set_color(self, color):
+-        self.color = color
+-
+-
+-car = Car("Красный", "универсал", 2024)
+-car.start()  # Вывод: Автомобиль заведён
+-car.set_color("Черный")
+-car.set_type("седан")
+-car.set_year(2021)
+-print(f"Цвет: {car.color}, Тип: {car.type}, Год: {car.year}")
+-car.stop()   # Вывод: Автомобиль заглушен
+-
+-
+-
+-# задание 4
+-
+-import math
+-
+-class Sphere:
+-    def __init__(self, radius=1.0, x=0.0, y=0.0, z=0.0):
+-        self.radius = radius
+-        self.center = (x, y, z)
+-
+-    def get_volume(self):    # возвращает объем сферы V = 4/3 * π * r^3
+-
+-        return (4 / 3) * math.pi * self.radius ** 3
+-
+-    def get_square(self):        # возвращает площадь внешней поверхности сферы  S = 4 * π * r^2
+-
+-        return 4 * math.pi * self.radius ** 2
+-
+-    def get_radius(self):    # возвращает текущий радиус сферы
+-
+-        return self.radius
+-
+-    def get_center(self):     # возвращает кортеж с координатами центра сферы
+-
+-        return self.center
+-
+-    def set_radius(self, radius):           # новый радиус сферы
+-
+-        self.radius = radius
+-
+-    def set_center(self, x, y, z):              #  новые координаты центра сферы
+-
+-        self.center = (x, y, z)
+-
+-    def is_point_inside(self, x, y, z):
+-
+-        # Проверяет, находится ли точка внутри сферы
+-        # точка внутри или на границе: расстояние до центра <= радиуса
+-
+-        dx = x - self.center[0]
+-        dy = y - self.center[1]
+-        dz = z - self.center[2]
+-
+-        distance_squared = dx ** 2 + dy ** 2 + dz ** 2
+-        return distance_squared <= self.radius ** 2
+-
+-
+-
+-# задание 5
+-
+-class SuperStr(str):
+-    def is_repeatance(self, s):
+-        # Если строка s пустая, возвращаем False
+-        if not s:
+-            return False
+-        # Проверяем, что текущая строка может быть получена повторением s
+-        # проверяем, что длина текущей строки делится на длину s
+-        if len(self) % len(s) != 0:
+-            return False
+-        # Строим строку из повторений s и сравниваем с текущей
+-        if self == s * (len(self) // len(s)):
+-            return True
+-        return False
+-
+-    def is_palindrom(self):
+-        # Палиндром вне зависимости от регистра
+-        lower_str = self.lower()
+-        return lower_str == lower_str[::-1]
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"48d24edb-f081-4297-bec3-cfeed7abb538\" name=\"Changes\" comment=\"home 12 done\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <excluded-from-favorite>\r\n      <branch-storage>\r\n        <map>\r\n          <entry type=\"LOCAL\">\r\n            <value>\r\n              <list>\r\n                <branch-info repo=\"$PROJECT_DIR$\" source=\"main\" />\r\n              </list>\r\n            </value>\r\n          </entry>\r\n        </map>\r\n      </branch-storage>\r\n    </excluded-from-favorite>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"development\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Tanya-888&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Tanya-888/TeachMeSkills_myhomeworks.git&quot;,\r\n    &quot;accountId&quot;: &quot;69eb9576-558c-4788-bb09-78922d96cde1&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"31PV0IMWmmzB6vAMvSevILQi9dT\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;Python.main.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;#4 on development&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;\r\n  },\r\n  &quot;keyToStringList&quot;: {\r\n    &quot;ChangesTree.GroupingKeys&quot;: [\r\n      &quot;directory&quot;,\r\n      &quot;repository&quot;\r\n    ]\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"TeachMeSkills_myhomeworks\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-53e2683a6804-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.26094.141\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"48d24edb-f081-4297-bec3-cfeed7abb538\" name=\"Changes\" comment=\"\" />\r\n      <created>1755425469171</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1755425469171</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Home_work 1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1755428618943</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1755428618950</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Home_work 1 done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1755429214039</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1755429214039</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"home 11\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1757002252750</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1757002252750</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"home 11 done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1757002443990</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1757002443990</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"home 12 done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1757002661238</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1757002661238</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"home 12 done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1757002696632</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1757002696632</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"home 12 done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1757007326562</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1757007326562</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"8\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Home_work 1\" />\r\n    <MESSAGE value=\"Home_work 1 done\" />\r\n    <MESSAGE value=\"home 11\" />\r\n    <MESSAGE value=\"home 11 done\" />\r\n    <MESSAGE value=\"home 12 done\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"home 12 done\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
++++ b/.idea/workspace.xml	(date 1757149205885)
+@@ -5,7 +5,11 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="48d24edb-f081-4297-bec3-cfeed7abb538" name="Changes" comment="home 12 done">
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/11.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/12.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -172,7 +176,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1757007326562</updated>
+     </task>
+-    <option name="localTasksCounter" value="8" />
++    <task id="LOCAL-00008" summary="home 12 done">
++      <option name="closed" value="true" />
++      <created>1757148523133</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1757148523135</updated>
++    </task>
++    <option name="localTasksCounter" value="9" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Black\">\r\n    <option name=\"sdkName\" value=\"Python 3.13\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.13\" project-jdk-type=\"Python SDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 36246094a17c2e1f106c46bf4ff63fab98f1b70c)
++++ b/.idea/misc.xml	(date 1757149119972)
+@@ -1,7 +1,4 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="Black">
+-    <option name="sdkName" value="Python 3.13" />
+-  </component>
+   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
+diff --git a/main.py b/main.py
+new file mode 100644
