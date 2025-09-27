@@ -1,0 +1,59 @@
+--1   задание к уроку 14
+
+CREATE TABLE Employees (
+    Name VARCHAR(100),
+    Position VARCHAR(50),
+    Department VARCHAR(50),
+    Salary DECIMAL(10, 2)
+);
+
+
+--2
+
+INSERT INTO Employees (Name, Position, Department, Salary) VALUES
+('Vlad Ivanov', 'Developer', 'IT', 3400),
+('Vera Nikituk', 'Manager', 'Sales', 7000),
+('Sergey Smirnov', 'Tester', 'IT', 10000),
+('Lena Orlova', 'Manager', 'Sales', 7500);
+
+--3
+
+UPDATE Employees
+SET Position = 'Senior Manager'
+WHERE Name = 'Lena Orlova;
+
+--4
+
+ALTER TABLE Employees
+ADD HireDate DATE;
+
+--5
+
+UPDATE Employees SET HireDate = '2024-01-15' WHERE Name = 'Vlad Ivanov';
+UPDATE Employees SET HireDate = '2019-06-01' WHERE Name = 'Vera Nikituk';
+UPDATE Employees SET HireDate = '2021-02-07' WHERE Name = 'Sergey Smirnov';
+UPDATE Employees SET HireDate = '2017-08-21' WHERE Name = 'Lena Orlova';
+
+--6
+
+SELECT * FROM Employees
+WHERE Position = 'Manager';
+
+
+--7
+SELECT * FROM Employees
+WHERE Salary > 5000;
+
+--8
+
+SELECT AVG(Salary) AS AverageSalary FROM Employees;
+
+
+--9
+
+DROP table Employees;
+
+
+
+
+
