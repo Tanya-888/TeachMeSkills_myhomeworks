@@ -1,0 +1,124 @@
+-- задание 1 к уроку 15
+
+-- Создание таблицы authors
+CREATE TABLE authors (
+    id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
+);
+
+-- Создание таблицы books
+CREATE TABLE books (
+    id INT PRIMARY KEY,
+    title VARCHAR(255),
+    author_id INT,
+    publication_year INT,
+    FOREIGN KEY (author_id) REFERENCES authors(id)
+);
+
+-- Создание таблицы sales
+CREATE TABLE sales (
+    id INT PRIMARY KEY,
+    book_id INT,
+    quantity INT,
+    FOREIGN KEY (book_id) REFERENCES books(id)
+);
+
+-- Вставка авторов
+INSERT INTO authors VALUES (1, 'Ivan', 'Kovalev');
+INSERT INTO authors VALUES (2, 'Sergey', 'Petrov');
+INSERT INTO authors VALUES (3, 'Anna', 'Sidorova');
+
+-- Вставка книг
+INSERT INTO books VALUES (1, 'Modern Science', 1, 2018);
+INSERT INTO books VALUES (2, 'Historical Tales', 2, 2020);
+INSERT INTO books VALUES (3, 'Tech Innovations', 3, 2021);
+INSERT INTO books VALUES (4, 'Advanced Mathematics', 1, 2019);
+
+-- Вставка продаж
+INSERT INTO sales VALUES (1, 1, 50);
+INSERT INTO sales VALUES (2, 2, 30);
+INSERT INTO sales VALUES (3, 3, 20);
+INSERT INTO sales VALUES (4, 4, 15);
+
+
+
+-- задание 2
+
+-- INNER JOIN: книги с авторами
+SELECT books.id, books.title, authors.first_name, authors.last_name
+FROM books
+INNER JOIN authors ON books.author_id = authors.id;
+
+-- LEFT JOIN: все авторы и их книги
+SELECT authors.id, authors.first_name, authors.last_name, books.title
+FROM authors
+LEFT JOIN books ON authors.id = books.author_id;
+
+-- RIGHT JOIN: все книги и их авторы, включая книги без указанного автора
+SELECT books.id, books.title, authors.first_name, authors.last_name
+FROM books
+RIGHT JOIN authors ON books.author_id = authors.id
+WHERE authors.id IS NULL OR authors.id IS NOT NULL;
+
+
+
+
+-- задание 3
+
+-- INNER JOIN: книги, авторы и продажи
+SELECT books.id AS book_id, books.title, authors.first_name, authors.last_name, sales.quantity
+FROM books
+INNER JOIN authors ON books.author_id = authors.id
+INNER JOIN sales ON books.id = sales.book_id;
+
+-- LEFT JOIN: все авторы, книги и продажи
+SELECT authors.id AS author_id, authors.first_name, authors.last_name,
+       books.id AS book_id, books.title, sales.quantity
+FROM authors
+LEFT JOIN books ON authors.id = books.author_id
+LEFT JOIN sales ON books.id = sales.book_id;
+
+
+
+-- задание 4
+
+-- Общее количество проданных книг каждого автора (INNER JOIN)
+SELECT authors.id, authors.first_name, authors.last_name, SUM(sales.quantity) AS total_sales
+FROM authors
+INNER JOIN books ON authors.id = books.author_id
+INNER JOIN sales ON books.id = sales.book_id
+GROUP BY authors.id, authors.first_name, authors.last_name;
+
+--  включая авторов без продаж (LEFT JOIN)
+SELECT authors.id, authors.first_name, authors.last_name, COALESCE(SUM(sales.quantity), 0) AS total_sales
+FROM authors
+LEFT JOIN books ON authors.id = books.author_id
+LEFT JOIN sales ON books.id = sales.book_id
+GROUP BY authors.id, authors.first_name, authors.last_name;
+
+
+
+-- задание 5
+
+-- Автор с наибольшим количеством проданных книг
+SELECT a.id, a.first_name, a.last_name, SUM(s.quantity) AS total_sales
+FROM authors a
+INNER JOIN books b ON a.id = b.author_id
+INNER JOIN sales s ON b.id = s.book_id
+GROUP BY a.id, a.first_name, a.last_name
+ORDER BY total_sales DESC
+LIMIT 1;
+
+-- Книги, проданные в количестве выше среднего
+SELECT b.id, b.title, SUM(s.quantity) AS total_sales
+FROM books b
+INNER JOIN sales s ON b.id = s.book_id
+GROUP BY b.id, b.title
+HAVING SUM(s.quantity) > (
+    SELECT AVG(sales_sum) FROM (
+        SELECT SUM(s2.quantity) AS sales_sum
+        FROM sales s2
+        GROUP BY s2.book_id
+    ) AS avg_sales
+);
