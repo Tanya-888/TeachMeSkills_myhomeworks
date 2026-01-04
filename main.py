@@ -8,7 +8,7 @@ import os
 
                      # Задача 1
 
-# Последовательная версия
+# последовательная версия
 def math_task(x):
     result = 0
     for i in range(10 ** 6):
@@ -22,13 +22,11 @@ def run_sequential_math(N):
     for i in range(N):
         math_task(i + 1)
     end_time = time.time()
-    print(f"Последовательная: {end_time - start_time:.2f} сек")
+    print(f"sequential: {end_time - start_time:.2f} сек")
 
-
-# Многопоточная версия
+# поточная версия
 def thread_math_task(x):
     return math_task(x)
-
 
 def run_thread_math(N):
     print("Запуск потоковой математики")
@@ -41,13 +39,11 @@ def run_thread_math(N):
     for t in threads:
         t.join()
     end_time = time.time()
-    print(f"Потоковая: {end_time - start_time:.2f} сек")
+    print(f"streaming: {end_time - start_time:.2f} сек")
 
-
-# Многопроцессная версия
+# процессная версия
 def process_math_task(x):
     return math_task(x)
-
 
 def run_process_math(N):
     print("Запуск процессорной математики")
@@ -60,8 +56,7 @@ def run_process_math(N):
     for p in processes:
         p.join()
     end_time = time.time()
-    print(f"Процессная: {end_time - start_time:.2f} сек")
-
+    print(f"process: {end_time - start_time:.2f} сек")
 
 
             # Задача 2
@@ -80,7 +75,6 @@ def get_request(url):
     except:
         pass
 
-
 def run_sequential_get(N):
     print("Запуск последовательных GET-запросов")
     start_time = time.time()
@@ -88,13 +82,11 @@ def run_sequential_get(N):
         for url in URLS:
             get_request(url)
     end_time = time.time()
-    print(f"Последовательные GET: {end_time - start_time:.2f} сек")
+    print(f"sequential GET: {end_time - start_time:.2f} сек")
 
-
-# многопоточная
+# поточная
 def thread_get_request(url):
     get_request(url)
-
 
 def run_thread_get(N):
     print("Запуск потоковых GET-запросов")
@@ -108,13 +100,11 @@ def run_thread_get(N):
     for t in threads:
         t.join()
     end_time = time.time()
-    print(f"Потоковые GET: {end_time - start_time:.2f} сек")
+    print(f"streaming GET: {end_time - start_time:.2f} сек")
 
-
-# многопроцессная
+# процессная
 def process_get_request(url):
     get_request(url)
-
 
 def run_process_get(N):
     print("Запуск процессных GET-запросов")
@@ -128,8 +118,7 @@ def run_process_get(N):
     for p in processes:
         p.join()
     end_time = time.time()
-    print(f"Процессные GET: {end_time - start_time:.2f} сек")
-
+    print(f"process GET: {end_time - start_time:.2f} сек")
 
 # запуск и сравнение
 if __name__ == "__main__":
